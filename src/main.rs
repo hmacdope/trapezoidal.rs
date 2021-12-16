@@ -12,10 +12,11 @@ fn main() {
 }
 
 // toy functions to integrate
+#[allow(dead_code)]
 fn two_x(x: f64) -> f64 {
     x * 2.0
 }
-
+#[allow(dead_code)]
 fn ident(x: f64) -> f64 {
     x 
 }
@@ -40,13 +41,6 @@ fn read_inputs() -> (f64, f64, i32) {
     (xmin, xmax, npoints)
 }
 
-fn read_int(val: &mut String) -> i32 {
-    println!("enter value");
-    io::stdin().read_line(val).expect("failed to read");
-    let val: i32 = val.trim().parse().expect("must be numeric");
-    val
-
-}
 
 fn gen_range(xmin: f64, xmax: f64, npoints: i32) -> Vec<f64>  {
     // generates a range of  npoints+1 values between xmin and xmax 
