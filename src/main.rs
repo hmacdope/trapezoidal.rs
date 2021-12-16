@@ -1,21 +1,17 @@
 use std::io;
 
 fn main() {
-    println!("Welcome to rust-int");
+    println!("Welcome to rust-int, a toy program for trapezoidal integration");
 
-    let mut xmin = String::new();
-    let mut xmax = String::new();
-    let mut npoints = String::new();
-
-    let xmin: f64 = read_val(&mut xmin);
-    let xmax: f64 = read_val(&mut xmax);
-    let npoints: i32 = read_int(&mut npoints);
+    let (xmin, xmax, npoints) = read_inputs();
     
-    let integral = trapz(&three_x_squared, xmin, xmax, npoints );
+    let integral = trapz(&three_x_squared, xmin, xmax, npoints);
+
     println!("integral value is {}",integral);
 
 }
 
+// toy functions to integrate
 fn two_x(x: f64) -> f64 {
     x * 2.0
 }
@@ -28,12 +24,20 @@ fn three_x_squared(x: f64) -> f64 {
     3.0*x*x
 }
 
-fn read_val(val: &mut String) -> f64 {
-    println!("enter value");
-    io::stdin().read_line(val).expect("failed to read");
-    let val: f64 = val.trim().parse().expect("must be numeric");
-    val
-
+fn read_inputs() -> (f64, f64, i32) {
+    println!("enter xmin value");
+    let mut xmin =  String::new();
+    io::stdin().read_line(&mut xmin).expect("failed to read");
+    let xmin: f64 = xmin.trim().parse().expect("must be numeric");
+    println!("enter xmax value");
+    let mut xmax =  String::new();
+    io::stdin().read_line(&mut xmax).expect("failed to read");
+    let xmax: f64 = xmax.trim().parse().expect("must be numeric");
+    println!("enter npoints value");
+    let mut npoints =  String::new();
+    io::stdin().read_line(&mut npoints).expect("failed to read");
+    let npoints: i32 = npoints.trim().parse().expect("must be integer");
+    (xmin, xmax, npoints)
 }
 
 fn read_int(val: &mut String) -> i32 {
@@ -86,7 +90,7 @@ fn trapz(func: &dyn Fn(f64) -> f64, xmin: f64, xmax: f64,  npoints: i32) -> f64 
 
 
     let dx = (xmax - xmin) / f64::from(npoints);
-    
+
     println!("dx is {}\n", dx);
     let mut sum: f64 = 0.0;
 
